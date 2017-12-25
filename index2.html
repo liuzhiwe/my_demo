@@ -1,0 +1,149 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css">
+    <style>
+        .odiv {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #333333;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .fill {
+            width: 50px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="odiv">
+        <div class="fill">
+
+
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="./js/jquery-1.12.4.min.js"></script>
+
+<script>
+    $(function () {
+        // var set = setInterv
+        var list = []
+        $(".odiv").on("mousemove", function (e) {
+            // clearInterval(set)
+            var wraplf = $(".odiv").offset().left;
+            var wrapht = $(".odiv").offset().top;
+            var thisth = $(".fill").offset().height;
+            var x = (e.pageX - wraplf) || 100;
+            var y = (e.pageY - wrapht) || 100;
+            if (x >= $(".odiv").width() || x < 0) { // 防止div移出边框
+                return;
+            }
+            $(".fill").css({
+                left: x - ($(".fill").width() / 2),
+                top: y - ($(".fill").height() / 2)
+            })
+            window.x = x;
+            window.y = y;
+        })
+        var str = null;
+        $(".fill").on("click", function (e) {
+            var box = $("<div></div>")
+            box.css({
+                "width": 10,
+                "height": 10,
+                "background": "black",
+                "position": "absolute",
+                "left": window.x,
+                "top": window.y,
+                "border-radius": 50
+            })
+            box.attr("class", "boom")
+            $(".odiv").append(box)
+            list.push(box)
+            var step = 5
+            if (str != null)
+                return;
+            str = setInterval(function () {
+                var  my_length = $(".boom").length;
+                var fly_length = $(".fly").length
+                for (var i = 0; i < my_length; i++) {
+                    var topCurrent = parseInt($(".boom").eq(i).css("top"));
+                    var s = $(".boom").eq(i).css("top", (topCurrent - step) + "px");
+                    
+                    if (topCurrent - 5 < 0) {
+
+                        $(".boom").eq(i).remove()
+                    }
+                   
+                }
+            }, 10)
+        })
+        var index2 = 0
+        function newdiji() {
+            var dj_x = Math.floor(Math.random() * ($(".odiv").width()))// 敌机的x
+            index2++
+            var newfly = $("<div></div>")
+            newfly.css({
+                "width": 20,
+                "height": 20,
+                "background": "green",
+                "position": "absolute",
+                "left": dj_x,
+                "top": 0
+            })
+            newfly.attr("class", "fly")
+            $(".odiv").append(newfly)
+            var fly_length = $(".fly").length
+            for (var i = 0; i < fly_length; i++) {
+                window.topFly = parseInt($(".fly").eq(i).css("top"));
+                var s = $(".fly").eq(i).css("top", (topFly + 5) + "px");
+            }
+
+        }
+        newdiji()
+
+        setInterval(newdiji, 1000)
+           
+        function isover(){
+            var totleFly = $(".fly").length;
+            var totleBoom = $(".boom").length;
+            for(var i = 0;i < totleBoom;i++)
+                for(var j = 0;j < totleFly;j++){
+                    var boomX = parseInt($(".boom").eq(i).css("left"));
+                    var boomY = parseInt($(".boom").eq(i).css("top"));
+                    var boomWidth = $(".boom").eq(i).width();
+                    var flyX = parseInt($(".fly").eq(j).css("left"));
+                    var flyY = parseInt($(".fly").eq(j).css("top"));
+                    var flyWidth = $(".fly").eq(j).width();
+                    var flyHeight = $(".fly").eq(j).height();
+                    if(boomY < (flyY + flyHeight) && Math.abs(boomX+boomWidth/2 - flyX-flyWidth/2) < (flyWidth/2 + boomWidth/2)){
+                        $(".boom").eq(i).remove();
+                        $(".fly").eq(j).remove();
+                        continue;
+                    }
+                }
+        }
+        isover()
+    })
+
+
+
+
+</script>

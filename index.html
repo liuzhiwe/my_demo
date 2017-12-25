@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <link rel="stylesheet/less" href="./less/demo.less"/>
+    <link rel="stylesheet" href="./css/iconfont.css"/>
+    <link rel="stylesheet" href="./css/swiper.min.css"/>
+    <script src="./lib/jquery/jquery.js"></script>
+    <script src="lib/less/less.js"></script>
+    <script src="./lib/template-web.js"></script>
+    <script src="./js/swiper.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <div id="header">
+        <i class="iconfont icon-mulu"></i>
+        <h4>红绿动漫</h4>
+        <a class="seach" href="#"><i class="iconfont icon-fangdajing"></i></a>
+    </div>
+    <div id="lb">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="./images/img/slide_01_640x340.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="./images/img/slide_01_640x340.jpg" alt=""/></div>
+                <div class="swiper-slide"><img src="./images/img/slide_01_640x340.jpg" alt=""/></div>
+            </div>
+            <!-- 濡傛灉闇�瑕佸垎椤靛櫒 -->
+            <div class="swiper-pagination"></div>
+
+
+
+        </div>
+    </div>
+    <!--tab鍒囨崲-->
+    <div id="tab">
+        <ul class="tabs clear">
+            <a  href="#"><li class="active">新增连载</li></a>
+            <a href="#"><li>新增完结</li></a>
+            <a href="#"><li>推荐连载</li></a>
+            <a href="#"><li>推荐完结</li></a>
+        </ul>
+        <div class="tabx clear">
+            <a href="#"><img src="./images/images/detail01.jpg" alt=""/><p>标题</p></a>
+            <a href="#"><img src="./images/images/detail01.jpg" alt=""/><p>标题</p></a>
+            <a href="#"><img src="./images/images/detail01.jpg" alt=""/><p>标题</p></a>
+            <a href="#"><img src="./images/images/detail01.jpg" alt=""/><p>标题</p></a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    window.onload = function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            direction: 'horizontal',
+            loop: true,
+
+            // 濡傛灉闇�瑕佸垎椤靛櫒
+            pagination: '.swiper-pagination',
+
+            autoplay:2000,
+            autoplayDisableOnInteraction: false,
+        })
+    }
+
+</script>
+
+</html>
+
+<script>
+    $(function(){
+        $.get({
+            url:"http://127.0.0.1:9091/api/getlunbo",
+            success:function(backdata){
+                console.log(backdata);
+            }
+        })
+
+
+    })
+</script>
